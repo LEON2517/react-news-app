@@ -1,11 +1,14 @@
-import React, {Component} from 'react'
-import Root from './components/Root'
+import React from 'react'
+import Article from './Article'
 
-export default class App extends Component {
-    render() {
-        return (
-                <Root />
-        )
-
-    }
+export default function App(props) {
+    return (
+        <div>
+            <h2>Menu</h2>
+            <div>
+                <h1>News App</h1>
+                <Article article = {props.articles[0]}/>
+            </div>
+        </div>
+    )
 }
