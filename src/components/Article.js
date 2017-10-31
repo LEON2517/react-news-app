@@ -1,7 +1,18 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import CommentList from './CommentList'
 
+
 class Article extends Component {
+    static propTypes = {
+        article: PropTypes.shape({
+            id: PropTypes.string,
+            title: PropTypes.string.isRequired,
+            text: PropTypes.string
+        }),
+        isOpen: PropTypes.bool,
+        toggleOpen: PropTypes.func
+    }
 
     render() {
         const {article, toggleOpen} = this.props
