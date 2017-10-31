@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Article from './Article'
+import Article from './Article/index.js'
 import accordion from '../decorators/accordion'
 import PropTypes from 'prop-types'
 
