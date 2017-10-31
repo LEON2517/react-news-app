@@ -6,7 +6,7 @@ export default function App(props) {
         <div>
             <h2>Menu</h2>
             <div>
-                <h1>News App</h1>
+                <h1>React News App</h1>
                 <ArticleList articles = {props.articles}/>
             </div>
         </div>
