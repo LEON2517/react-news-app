@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Loader from './Loader'
 import Article from './Article/index.js'
 import accordion from '../decorators/accordion'
 import PropTypes from 'prop-types'
@@ -20,7 +21,10 @@ class ArticleList extends Component {
 
     render() {
         console.log('---', 'rendering article list')
-        const {openItemId, toggleOpenItem, articles} = this.props
+        const {openItemId, toggleOpenItem, articles, loading} = this.props
+
+        if (loading) return <Loader/>
+
         const articleElements = articles.map(article => (
             <li key={article.id}>
                 <Article
@@ -41,6 +45,7 @@ class ArticleList extends Component {
 
 export default connect(state => {
     return {
-        articles: filtratedArticlesSelector(state)
+        articles: filtratedArticlesSelector(state),
+        loading: state.articles.loading
     }
 }, {loadAllArticles})(accordion(ArticleList))
