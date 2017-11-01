@@ -9,7 +9,7 @@ export default class Root extends Component {
                 <h2>Menu</h2>
                 <div>
                     <h1>React News App</h1>
-                    <Filters articles = {[]}/>
+                    <Filters />
                     <ArticleList/>
                 </div>
             </div>
