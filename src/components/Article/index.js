@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
 import CSSTransion from 'react-addons-css-transition-group'
 import './style.css'
+import {connect} from 'react-redux'
+import {deleteArticle} from '../../AC'
 
 class Article extends Component {
     static propTypes = {
@@ -21,6 +23,7 @@ class Article extends Component {
         return (
             <div>
                 <h3 onClick={toggleOpen}>{article.title}</h3>
+                <button onClick={this.handleDelete}>delete</button>
                 <CSSTransion
                     transitionName="article"
                     transitionEnterTimeout={500}
@@ -43,6 +46,10 @@ class Article extends Component {
             </div>
         )
     }
+
+    handleDelete = () => {
+        this.props.deleteArticle (this.props.article.id)
+    }
 }
 
-export default Article
+export default connect(null, {deleteArticle})(Article)
