@@ -42,7 +42,7 @@ class Article extends Component {
         return this.props.isOpen && (
             <div>
                 <p>{this.props.article.text}</p>
-                <CommentList comments = {this.props.article.comments}/>
+                <CommentList article = {this.props.article}/>
             </div>
         )
     }
