@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import ArticlesPage from './Routes/ArticlesPage'
 import Filters from './Filters'
 import CommentsPage from './Routes/CommentsPage'
-import {Route, Link, NavLink, Switch} from 'react-router-dom'
+import {Route, Link, NavLink, Switch, Redirect} from 'react-router-dom'
 import NotFoundPage from './Routes/NotFoundPage'
 
 export default class Root extends Component {
@@ -17,8 +17,10 @@ export default class Root extends Component {
                 <div>
                     <h1>React News App</h1>
                     <Switch>
+                        <Redirect from="/" exact to="/articles"/>
                         <Route path="/filters" component={Filters}/>
                         <Route path="/articles/new" render={this.getArticleForm}/>
+                        <Route path="/article" to="/articles"/>
                         <Route path="/articles" component={ArticlesPage}/>
                         <Route path='/comments' component={CommentsPage}/>
                         <Route path="*" component={NotFoundPage}/>
