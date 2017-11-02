@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ArticlesPage from './Routes/ArticlesPage'
 import Filters from './Filters'
-import {Route, Link} from 'react-router-dom'
+import {Route, Link, Switch} from 'react-router-dom'
 
 export default class Root extends Component {
     render() {
@@ -14,10 +14,15 @@ export default class Root extends Component {
                 </div>
                 <div>
                     <h1>React News App</h1>
-                    <Route path="/filters" component={Filters}/>
-                    <Route path="/articles" component={ArticlesPage}/>
+                    <Switch>
+                        <Route path="/filters" component={Filters}/>
+                        <Route path="/articles/new" render={this.getArticleForm}/>
+                        <Route path="/articles" component={ArticlesPage}/>
+                    </Switch>
                 </div>
             </div>
         )
     }
+
+    getArticleForm = () => <h2>New Article form</h2>
 }
