@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ArticleList from './ArticleList'
+import ArticlesPage from './Routes/ArticlesPage'
 import Filters from './Filters'
 import {Route, Link} from 'react-router-dom'
 
@@ -15,7 +15,7 @@ export default class Root extends Component {
                 <div>
                     <h1>React News App</h1>
                     <Route path="/filters" component={Filters}/>
-                    <Route path="/articles" component={ArticleList}/>
+                    <Route path="/articles" component={ArticlesPage}/>
                 </div>
             </div>
         )

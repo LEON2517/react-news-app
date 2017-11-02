@@ -9,6 +9,7 @@ import {deleteArticle, loadArticleById} from '../../AC'
 
 class Article extends Component {
     static propTypes = {
+        id: PropTypes.string.isRequired,
         article: PropTypes.shape({
             id: PropTypes.string,
             title: PropTypes.string.isRequired,
@@ -19,11 +20,12 @@ class Article extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.isOpen && !this.props.isOpen) nextProps.loadArticle()
+        if(nextProps.isOpen) nextProps.loadArticle()
     }
 
     render() {
         const {article, toggleOpen, deleteArticle} = this.props
+        if (!article) return null
 
         return (
             <div>
@@ -56,10 +58,11 @@ class Article extends Component {
             </div>
         )
     }
-
 }
 
-export default connect(null, (dispatch, ownProps) => ({
-    deleteArticle: () => dispatch(deleteArticle(ownProps.article.id)),
-    loadArticle: () => dispatch(loadArticleById(ownProps.article.id))
-}), null, {pure: false})(Article)
+export default connect((state, props) => ({
+    article: state.articles.entities.get(props.id)
+}), (dispatch, ownProps) => ({
+    deleteArticle: () => dispatch(deleteArticle(ownProps.id)),
+    loadArticle: () => dispatch(loadArticleById(ownProps.id))
+}))(Article)
