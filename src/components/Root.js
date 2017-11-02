@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import ArticlesPage from './Routes/ArticlesPage'
 import Filters from './Filters'
-import {Route, Link, Switch} from 'react-router-dom'
+import CommentsPage from './Routes/CommentsPage'
+import {Route, Link, NavLink, Switch} from 'react-router-dom'
+import NotFoundPage from './Routes/NotFoundPage'
 
 export default class Root extends Component {
     render() {
@@ -18,6 +20,8 @@ export default class Root extends Component {
                         <Route path="/filters" component={Filters}/>
                         <Route path="/articles/new" render={this.getArticleForm}/>
                         <Route path="/articles" component={ArticlesPage}/>
+                        <Route path='/comments' component={CommentsPage}/>
+                        <Route path="*" component={NotFoundPage}/>
                     </Switch>
                 </div>
             </div>
