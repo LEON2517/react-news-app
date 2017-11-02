@@ -66,4 +66,4 @@ export default connect((state, props) => ({
 }), (dispatch, ownProps) => ({
     deleteArticle: () => dispatch(deleteArticle(ownProps.id)),
     loadArticle: () => dispatch(loadArticleById(ownProps.id))
-}))(Article)
+}), null, {pure: false})(Article)

@@ -4,17 +4,18 @@ import Filters from './Filters'
 import CommentsPage from './Routes/CommentsPage'
 import {Route, Link, NavLink, Switch, Redirect} from 'react-router-dom'
 import NotFoundPage from './Routes/NotFoundPage'
+import Menu, {MenuItem} from './Menu'
 
 export default class Root extends Component {
     render() {
         return (
             <div>
                 <h2>Menu</h2>
-                <div>
-                    <div><NavLink to="/filters" activeStyle ={{color: 'red'}}>filters</NavLink></div>
-                    <div><NavLink to="/articles" activeStyle ={{color: 'red'}}>articles</NavLink></div>
-                    <div><NavLink to="/comments" activeStyle ={{color: 'red'}}>comments</NavLink></div>
-                </div>
+                <Menu>
+                    <MenuItem link="articles"/>
+                    <MenuItem link="filters"/>
+                    <MenuItem link="comments"/>
+                </Menu>
                 <div>
                     <h1>React News App</h1>
                     <Switch>
@@ -24,6 +25,7 @@ export default class Root extends Component {
                         <Route path="/article" to="/articles"/>
                         <Route path="/articles" component={ArticlesPage}/>
                         <Route path='/comments' component={CommentsPage}/>
+                        <Route path="/error" render={() => <h1>Error</h1>}/>
                         <Route path="*" component={NotFoundPage}/>
                     </Switch>
                 </div>

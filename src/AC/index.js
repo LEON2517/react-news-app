@@ -1,6 +1,7 @@
 import { DELETE_ARTICLE, CHANGE_DATE_RANGE, CHANGE_SELECTION, ADD_COMMENT, LOAD_ALL_ARTICLES,
     LOAD_ARTICLE, LOAD_ARTICLE_COMMENTS, LOAD_COMMENTS_FOR_PAGE, START, SUCCESS, FAIL
 } from '../constants'
+import {push} from 'react-router-redux'
 
 export function deleteArticle(id) {
     return {
@@ -50,18 +51,25 @@ export function loadArticleById(id) {
 
         setTimeout(() => {
             fetch(`/api/article/${id}`)
-                .then(res => res.json())
+                .then(res => {
+                    if (res.status >= 400) throw new Error(res.statusText)
+                    return res.json()
+                })
                 .then(response => dispatch({
                     type: LOAD_ARTICLE + SUCCESS,
-                    response,
-                    payload: { id }
-                }))
-                .catch(error => dispatch({
-                    type: LOAD_ARTICLE + FAIL,
                     payload: { id },
-                    error
+                    response
                 }))
-        }, 1000)
+                .catch(error => {
+                    dispatch(push('/error'))
+
+                    dispatch({
+                        type: LOAD_ARTICLE + FAIL,
+                        payload: { id },
+                        error
+                    })
+                })
+        }, 500)
     }
 }
 
