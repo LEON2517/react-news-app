@@ -6,6 +6,7 @@ import CSSTransion from 'react-addons-css-transition-group'
 import './style.css'
 import {connect} from 'react-redux'
 import {deleteArticle, loadArticleById} from '../../AC'
+import LocalizedText from '../LocalizedText'
 
 class Article extends Component {
     static propTypes = {
@@ -31,7 +32,9 @@ class Article extends Component {
         return (
             <div>
                 <h3 onClick={toggleOpen}>{article.title}</h3>
-                <button onClick={deleteArticle}>delete</button>
+                <button onClick={deleteArticle}>
+                    <LocalizedText>delete me</LocalizedText>
+                </button>
                 <CSSTransion
                     transitionName="article"
                     transitionEnterTimeout={500}

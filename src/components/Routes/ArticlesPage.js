@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ArticleList from '../ArticleList'
 import Article from '../Article'
 import {Route} from 'react-router-dom'
+import LocalizedText from '../LocalizedText'
 
 class ArticlesPage extends Component {
 
@@ -16,7 +17,7 @@ class ArticlesPage extends Component {
 
     getArticle = ({match}) => {
         console.log('match', match)
-        if (!match) return <h2>Please select article</h2>
+        if (!match) return <h2><LocalizedText>Please select article</LocalizedText></h2>
         return <Article id={match.params.id} isOpen key={match.params.id} />
     }
 }

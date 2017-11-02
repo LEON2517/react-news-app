@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import Comment from './Comment'
-import toggleOpne from '../decorators/toggleOpen'
+import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
 import Loader from './Loader'
 import CommentForm from './CommentForm'
 import {connect} from 'react-redux'
 import {loadArticleComments} from '../AC'
+import LocalizedText from './LocalizedText'
 
 class CommentList extends Component {
     static defaultProps = {
@@ -13,6 +14,10 @@ class CommentList extends Component {
         article: PropTypes.object.isRequired,
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
+    }
+
+    static contextTypes = {
+        user: PropTypes.string
     }
 
     componentWillReceiveProps({ isOpen, article, loadArticleComments }) {
@@ -29,7 +34,7 @@ class CommentList extends Component {
         const text = this.props.isOpen ? 'hide comments' : 'show comments';
         return (
             <div>
-                <button onClick={toggleOpen}>{text}</button>
+                <button onClick={toggleOpen}><LocalizedText>{text}</LocalizedText></button>
                 {this.getBody()}
             </div>
         )
@@ -45,7 +50,7 @@ class CommentList extends Component {
             <ul>
                 {comments.map(id => <li key = {id}><Comment id = {id}/></li>)}
             </ul>
-        ) : <h3>No comment yet</h3>
+        ) : <h3><LocalizedText>No comments yet</LocalizedText></h3>
 
         return (
             <div>
@@ -56,4 +61,4 @@ class CommentList extends Component {
     }
 }
 
-export default connect(null, {loadArticleComments})(toggleOpne(CommentList))
+export default connect(null, { loadArticleComments }, null, {pure: false})(toggleOpen(CommentList))
