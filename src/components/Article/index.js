@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
+import Loader from '../Loader'
 import CSSTransion from 'react-addons-css-transition-group'
 import './style.css'
 import {connect} from 'react-redux'
-import {deleteArticle} from '../../AC'
+import {deleteArticle, loadArticleById} from '../../AC'
 
 class Article extends Component {
     static propTypes = {
@@ -17,13 +18,17 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.isOpen && !this.props.isOpen) nextProps.loadArticle()
+    }
+
     render() {
-        const {article, toggleOpen} = this.props
+        const {article, toggleOpen, deleteArticle} = this.props
 
         return (
             <div>
                 <h3 onClick={toggleOpen}>{article.title}</h3>
-                <button onClick={this.handleDelete}>delete</button>
+                <button onClick={deleteArticle}>delete</button>
                 <CSSTransion
                     transitionName="article"
                     transitionEnterTimeout={500}
@@ -39,6 +44,11 @@ class Article extends Component {
     }
 
     getBody() {
+        const {article, isOpen} = this.props
+        if (!isOpen) return null
+
+        if (article.loading) return <Loader />
+
         return this.props.isOpen && (
             <div>
                 <p>{this.props.article.text}</p>
@@ -47,10 +57,9 @@ class Article extends Component {
         )
     }
 
-    handleDelete = () => {
-        const {deleteArticle, article} = this.props
-        deleteArticle(this.props.article.id)
-    }
 }
 
-export default connect(null, {deleteArticle})(Article)
+export default connect(null, (dispatch, ownProps) => ({
+    deleteArticle: () => dispatch(deleteArticle(ownProps.article.id)),
+    loadArticle: () => dispatch(loadArticleById(ownProps.article.id))
+}), null, {pure: false})(Article)
