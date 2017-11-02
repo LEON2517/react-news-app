@@ -3,7 +3,7 @@ import {createSelector} from 'reselect'
 export const articlesSelector = state => state.articles.entities.valueSeq().toArray()
 export const filtersSelector = state => state.filters
 export const idSelector = (state, props) => props.id
-export const commentsSelector = state => state.comments
+export const commentsSelector = state => state.comments.entities
 
 export const filtratedArticlesSelector = createSelector(articlesSelector, filtersSelector, (articles, filters) => {
     const {selected, dateRange: {from, to}} = filters
@@ -16,5 +16,5 @@ export const filtratedArticlesSelector = createSelector(articlesSelector, filter
 })
 
 export const createCommentSelector = () => createSelector(commentsSelector, idSelector, (comments, id) => {
-    return comments[id]
+    return comments.get(id)
 })

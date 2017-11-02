@@ -2,8 +2,10 @@ import React, {Component} from 'react'
 import Comment from './Comment'
 import toggleOpne from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
+import Loader from './Loader'
 import CommentForm from './CommentForm'
-
+import {connect} from 'react-redux'
+import {loadArticleComments} from '../AC'
 
 class CommentList extends Component {
     static defaultProps = {
@@ -11,6 +13,12 @@ class CommentList extends Component {
         article: PropTypes.object.isRequired,
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
+    }
+
+    componentWillReceiveProps({ isOpen, article, loadArticleComments }) {
+        if (!this.props.isOpen && isOpen && !article.commentsLoading && !article.commentsLoaded) {
+            loadArticleComments(article.id)
+        }
     }
 
 
@@ -28,8 +36,10 @@ class CommentList extends Component {
     }
 
     getBody() {
-        const { article: {id, comments = []}, isOpen } = this.props
+        const { article: {comments, id, commentsLoading, commentsLoaded}, isOpen } = this.props
         if (!isOpen) return null
+        if (commentsLoading) return <Loader />
+        if (!commentsLoaded) return null
 
         const body = comments.length ? (
             <ul>
@@ -46,4 +56,4 @@ class CommentList extends Component {
     }
 }
 
-export default toggleOpne(CommentList)
+export default connect(null, {loadArticleComments})(toggleOpne(CommentList))
