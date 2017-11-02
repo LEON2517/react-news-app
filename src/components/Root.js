@@ -11,8 +11,9 @@ export default class Root extends Component {
             <div>
                 <h2>Menu</h2>
                 <div>
-                    <div><Link to="/filters">filters</Link></div>
-                    <div><Link to="/articles">articles</Link></div>
+                    <div><NavLink to="/filters" activeStyle ={{color: 'red'}}>filters</NavLink></div>
+                    <div><NavLink to="/articles" activeStyle ={{color: 'red'}}>articles</NavLink></div>
+                    <div><NavLink to="/comments" activeStyle ={{color: 'red'}}>comments</NavLink></div>
                 </div>
                 <div>
                     <h1>React News App</h1>
