@@ -16,7 +16,8 @@ class ArticleList extends Component {
     }
 
     componentDidMount() {
-        this.props.loadAllArticles()
+        const {loaded, loading, loadAllArticles} = this.props
+        if (!loading && !loaded) loadAllArticles()
     }
 
     render() {
@@ -46,6 +47,7 @@ class ArticleList extends Component {
 export default connect(state => {
     return {
         articles: filtratedArticlesSelector(state),
-        loading: state.articles.loading
+        loading: state.articles.loading,
+        loaded: state.articles.loaded
     }
 }, {loadAllArticles})(accordion(ArticleList))
